@@ -47,7 +47,26 @@ exports.getExercises = async (req, res) => {
 // @access  Private
 exports.getExercise = async (req, res) => {
   try {
-    const exercise = await Exercise.findById(req.params.id)
+    const { id } = req.params;
+
+    // Validar que el ID sea válido
+    if (!id || id === 'undefined' || id === 'null') {
+      return res.status(400).json({
+        success: false,
+        message: 'ID de ejercicio inválido',
+      });
+    }
+
+    // Validar formato de ObjectId
+    const mongoose = require('mongoose');
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Formato de ID inválido',
+      });
+    }
+
+    const exercise = await Exercise.findById(id)
       .populate('course')
       .populate('lesson');
 
@@ -98,21 +117,36 @@ exports.createExercise = async (req, res) => {
       }
     }
 
+    // Crear el ejercicio
     const exercise = await Exercise.create(req.body);
 
+    // Log para debug
+    console.log('Exercise created with ID:', exercise._id);
+
+    // Populate el ejercicio creado
     const populatedExercise = await Exercise.findById(exercise._id)
       .populate('course', 'name')
       .populate('lesson', 'title');
 
+    // Asegurar que el _id está presente en la respuesta
+    const responseData = populatedExercise.toObject();
+    
+    // Log para debug
+    console.log('Response data:', {
+      _id: responseData._id,
+      title: responseData.title,
+      type: responseData.type,
+    });
+
     res.status(201).json({
       success: true,
-      data: populatedExercise,
+      data: responseData,
     });
   } catch (error) {
     console.error('Create exercise error:', error);
     res.status(500).json({
       success: false,
-      message: 'Error al crear ejercicio',
+      message: error.message || 'Error al crear ejercicio',
     });
   }
 };

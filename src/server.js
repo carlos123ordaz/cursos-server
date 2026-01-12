@@ -22,6 +22,8 @@ app.use('/api/modules', require('./routes/module.routes'));
 app.use('/api/lessons', require('./routes/lesson.routes'));
 app.use('/api/enrollments', require('./routes/enrollment.routes'));
 app.use('/api/upload', require('./routes/upload.routes'));
+app.use('/api/exercises', require('./routes/exercises.routes'));
+app.use('/api/exam-submissions',require('./routes/examsubmissions.routes') );
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({ 
