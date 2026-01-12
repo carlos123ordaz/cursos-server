@@ -22,7 +22,7 @@ router
 router
   .route('/:id')
   .get(enrollmentController.getEnrollment)
-  .put(authorize('admin'), enrollmentController.updateEnrollment)
+  .put( enrollmentController.updateEnrollment)
   .delete(authorize('admin'), enrollmentController.deleteEnrollment);
 
 router

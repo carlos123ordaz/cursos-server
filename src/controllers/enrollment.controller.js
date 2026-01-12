@@ -258,7 +258,7 @@ exports.deleteEnrollment = async (req, res) => {
 exports.completeLesson = async (req, res) => {
   try {
     const { lessonId, watchTime } = req.body;
-
+    console.log('llego')
     const enrollment = await Enrollment.findById(req.params.id);
 
     if (!enrollment) {
