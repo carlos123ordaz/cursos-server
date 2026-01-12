@@ -24,15 +24,15 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: [true, 'La categoría es requerida'],
     enum: [
-      '3D y Animación',
-      'Diseño Web y App',
-      'Ilustración',
-      'Fotografía',
-      'Marketing',
-      'Programación',
       'Matemáticas',
-      'Razonamiento Verbal',
-      'Otros',
+      'Razonamiento',
+      'Comunicación',
+      'Ciencias',
+      'Ciencias Sociales',
+      'Humanidades',
+      'Aptitud Académica',
+      'Cultura General',
+      'Otros'
     ],
   },
   thumbnail: {
@@ -91,7 +91,7 @@ courseSchema.virtual('modules', {
 });
 
 // Generar slug antes de guardar
-courseSchema.pre('save', function(next) {
+courseSchema.pre('save', function (next) {
   if (this.isModified('name')) {
     this.slug = this.name
       .toLowerCase()
@@ -102,7 +102,7 @@ courseSchema.pre('save', function(next) {
 });
 
 // Método para formatear duración
-courseSchema.methods.getFormattedDuration = function() {
+courseSchema.methods.getFormattedDuration = function () {
   const hours = Math.floor(this.totalDuration / 3600);
   const minutes = Math.floor((this.totalDuration % 3600) / 60);
   return `${hours}h ${minutes}m`;

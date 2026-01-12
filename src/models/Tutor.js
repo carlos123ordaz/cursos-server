@@ -11,15 +11,15 @@ const tutorSchema = new mongoose.Schema({
     type: String,
     required: [true, 'La especialidad es requerida'],
     enum: [
-      '3D y Animación',
-      'Diseño Web y App',
-      'Ilustración',
-      'Fotografía',
-      'Marketing',
-      'Programación',
       'Matemáticas',
-      'Razonamiento Verbal',
-      'Otros',
+      'Razonamiento',
+      'Comunicación',
+      'Ciencias',
+      'Ciencias Sociales',
+      'Humanidades',
+      'Aptitud Académica',
+      'Cultura General',
+      'Otros'
     ],
   },
   bio: {
