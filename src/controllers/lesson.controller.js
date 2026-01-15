@@ -10,7 +10,7 @@ const { createVideo, uploadVideo, deleteVideo, getEmbedUrl, getHlsUrl, getThumbn
 exports.getLessons = async (req, res) => {
   try {
     const { moduleId, courseId } = req.query;
-    
+    console.log('quoery: ',req.query);
     let query = {};
     if (moduleId) query.module = moduleId;
     if (courseId) query.course = courseId;
@@ -19,7 +19,6 @@ exports.getLessons = async (req, res) => {
       .populate('module', 'title')
       .populate('tutor')
       .sort({ order: 1 });
-
     res.status(200).json({
       success: true,
       count: lessons.length,
@@ -89,8 +88,8 @@ exports.createLesson = async (req, res) => {
     }
 
     // Check ownership
-    if (req.user.role === 'admin' && 
-        course.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role === 'admin' &&
+      course.createdBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: 'No tienes permiso para agregar lecciones a este curso',
@@ -141,8 +140,8 @@ exports.updateLesson = async (req, res) => {
     }
 
     // Check ownership
-    if (req.user.role === 'admin' && 
-        lesson.course.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role === 'admin' &&
+      lesson.course.createdBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: 'No tienes permiso para editar esta lección',
@@ -186,8 +185,8 @@ exports.deleteLesson = async (req, res) => {
     }
 
     // Check ownership
-    if (req.user.role === 'admin' && 
-        lesson.course.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role === 'admin' &&
+      lesson.course.createdBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: 'No tienes permiso para eliminar esta lección',
@@ -240,8 +239,8 @@ exports.uploadVideo = async (req, res) => {
     }
 
     // Check ownership
-    if (req.user.role === 'admin' && 
-        lesson.course.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role === 'admin' &&
+      lesson.course.createdBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: 'No tienes permiso',
@@ -306,8 +305,8 @@ exports.addResource = async (req, res) => {
     }
 
     // Check ownership
-    if (req.user.role === 'admin' && 
-        lesson.course.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role === 'admin' &&
+      lesson.course.createdBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: 'No tienes permiso',
@@ -372,8 +371,8 @@ exports.deleteResource = async (req, res) => {
     }
 
     // Check ownership
-    if (req.user.role === 'admin' && 
-        lesson.course.createdBy.toString() !== req.user._id.toString()) {
+    if (req.user.role === 'admin' &&
+      lesson.course.createdBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: 'No tienes permiso',

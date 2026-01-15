@@ -436,12 +436,13 @@ exports.uploadQuestionImage = async (req, res) => {
 // @access  Private (Student)
 exports.getExercisesByLesson = async (req, res) => {
   try {
+    console.log(req.params.lessonId)
     const exercises = await Exercise.find({
       lesson: req.params.lessonId,
       type: 'lesson',
       status: 'Activo',
     }).select('-questions.options.isCorrect'); // No enviar respuestas correctas
-
+    console.log('ejercicios: ',exercises)
     res.status(200).json({
       success: true,
       count: exercises.length,

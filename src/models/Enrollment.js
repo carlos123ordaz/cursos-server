@@ -41,7 +41,7 @@ const enrollmentSchema = new mongoose.Schema({
       default: Date.now,
     },
     watchTime: {
-      type: Number, // segundos vistos
+      type: Number, 
       default: 0,
     },
   }],
